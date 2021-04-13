@@ -1,0 +1,35 @@
+netsh interface ip set address “Connessione alla rete locale” dhcp
+netsh interface ip set dns “ Connessione alla rete locale”dhcp
+
+
+netsh interface ip set address “Connessione alla rete locale” static indirizzo ip subnet  gateway
+
+
+
+
+
+Visualizzare le impostazioni TCP/IP
+netsh interface ip show config
+
+Impostare l'indirizzo IP e altri parametri TCP/IP
+netsh interface ip set address name="Connessione alla rete locale (LAN)" static 192.168.0.10 255.255.255.0 192.168.0.1 1
+Con questo comando si imposta l'indirizzo IP, la Subnet Mask e il gateway dell'interfaccia relativa alla connessione di rete chiamata "Connessione alla rete locale (LAN)".
+
+Salvare/ripristinare le impostazioni di rete in un file
+netsh -c interface dump > c:\configurazione.txt 
+In questo modo è possibile salvare le impostazioni di rete in un file di testo. Per ripristinare le impostazioni di rete utilizzando il file creato con il comando visto sopra basta digitare
+netsh -f c:\configurazione.txt 
+E' possibile utilizzare anche l'opzione EXEC al posto dello switch -f
+netsh exec c:\configurazione.txt
+
+Impostare il DHCP per ottenere automaticamente l'indirizzo IP
+netsh interface ip set address "Connessione alla rete locale (LAN)" dhcp
+
+Impostare il DNS
+netsh interface ip set dns "Connessione alla rete locale (LAN)" static 192.168.0.100
+
+Impostare il WINS
+netsh interface ip set wins "Connessione alla rete locale (LAN)" static 192.168.0.100
+
+Impostare un DNS dinamico
+netsh interface ip set dns "Connessione alla rete locale (LAN)" dhcp
