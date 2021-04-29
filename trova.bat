@@ -8,11 +8,12 @@ set after=0
 set filter=true
 set str_in_file=false
 set strcmp=
+set wildcards=*.c *.h *.cpp *.hpp *.ld *.icf
 
 :loop
 
 if "%~1" == "-s" (
-    set strcmp=%2
+    set strcmp="%~2"
     set str_in_file=true
     echo ricerca di %2 ...
     shift
@@ -52,24 +53,34 @@ if "%~1" == "-a" (
     goto loop
 )
 
-if "%~1" == "" ( goto help )
+REM if "%~1" == "" ( goto help )
+if "%~1" EQU "" goto jump_wildcards
+set wildcards=%~1
+shift
+:loop_wildcards
+if "%~1"=="" goto jump_wildcards
+set wildcards=%wildcards% %~1
+shift
+goto loop_wildcards
+:jump_wildcards
+
 REM if "%~2" == "" ( goto help )
 if "%~1" == "-h" ( goto help )
 if "%~1" == "-H" ( goto help )
 
-if "%~3" NEQ "" ( goto help )
+if "%~1" NEQ "" ( goto help )
 
-
-echo ************************************************************************************
+echo tra i file/s %wildcards% ...
+echo ************************************************************************* %time% ***********
 
 if "%str_in_file%"=="false" (
-    dir /s /b %~1
+    dir /s /b %wildcards%
     goto fine
 )
 
 if "%subfolders%"=="true" (
 
-    for /r %%i in (%~1) do (
+    for /r %%i in (%wildcards%) do (
         if "%minmaius%"=="false" (
             if "%filter%"=="false" (
                 find /n %strcmp% "%%i"
@@ -87,7 +98,8 @@ if "%subfolders%"=="true" (
 
 ) else (
 
-    for %%i in (%~1) do (
+    for %%i in (%wildcards%) do (
+        echo find /n %strcmp% "%%i"
         if "%minmaius%"=="false" (
             if "%filter%"=="false" (
                 find /n %strcmp% "%%i"
@@ -106,22 +118,23 @@ if "%subfolders%"=="true" (
 )
 
 
-echo ************************************************************************************
+echo ************************************************************************* %time% ***********
 
 goto fine
 
 
 :help
 echo.
-echo   eseguire:        trova ^<wildcards^> ^<stringa^>
+echo   eseguire:        trova -s ^<stringa^> ^<wildcards^>
 echo.
-echo   esempio:         trova "?time.h;?time.c" "tim_set_ms"
-echo                    trova "?time.h,?time.c" "tim_set_ms"
-echo                    trova "?time.h ?time.c" "tim_set_ms"
-echo                    ricerca dal percorso corrente e in tutte le sottodirectory la stringa "tim_set_ms" in tutti i file che rispettano la sintassi "?time.h;?time.c"
+echo   esempio:         trova -s "stringa da trovare" *.c *.h
+echo                    ricerca dal percorso corrente e in tutte le sottodirectory la stringa "stringa da trovare"
+echo                    in tutti i file che rispettano la sintassi "*.c *.h"
 echo.
 echo   -g a1 a2 str     mostra a1 righe prima e a2 righe dopo il match con str
 echo   -c               cerca solo nella directory corrente
 echo   -a               mostra tutti i file ricercati
+echo.
+echo   se non si specifica un ^<wildcards^> verra' applicato il default *.c *.h *.cpp *.hpp *.ld *.icf
 echo.
 :fine
