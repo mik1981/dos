@@ -7,16 +7,26 @@ set before=2
 set after=0
 set filter=true
 set str_in_file=false
+set feedback=false
 set strcmp=
 set wildcards=*.c *.h *.cpp *.hpp *.ld *.icf
 
 :loop
+
+if "%~1" == "-h" ( goto help )
+if "%~1" == "-H" ( goto help )
 
 if "%~1" == "-s" (
     set strcmp="%~2"
     set str_in_file=true
     echo ricerca di %2 ...
     shift
+    shift
+    goto loop
+)
+
+if "%~1" == "-fb" (
+    set feedback=true
     shift
     goto loop
 )
@@ -65,8 +75,6 @@ goto loop_wildcards
 :jump_wildcards
 
 REM if "%~2" == "" ( goto help )
-if "%~1" == "-h" ( goto help )
-if "%~1" == "-H" ( goto help )
 
 if "%~1" NEQ "" ( goto help )
 
@@ -75,10 +83,8 @@ echo ************************************************************************* %
 
 if "%str_in_file%"=="false" (
     dir /s /b %wildcards%
-    goto fine
-)
 
-if "%subfolders%"=="true" (
+) else if "%subfolders%"=="true" (
 
     for /r %%i in (%wildcards%) do (
         if "%minmaius%"=="false" (
@@ -120,6 +126,8 @@ if "%subfolders%"=="true" (
 
 echo ************************************************************************* %time% ***********
 
+if "%feedback%"=="true" ( info Termine ricerca dei file/s %wildcards% in %cd% ) 
+
 goto fine
 
 
@@ -134,6 +142,8 @@ echo.
 echo   -g a1 a2 str     mostra a1 righe prima e a2 righe dopo il match con str
 echo   -c               cerca solo nella directory corrente
 echo   -a               mostra tutti i file ricercati
+echo   -i               ignora maiuscole-minuscole
+echo   -fb              informa con un popup della fine dell'operazione
 echo.
 echo   se non si specifica un ^<wildcards^> verra' applicato il default *.c *.h *.cpp *.hpp *.ld *.icf
 echo.
