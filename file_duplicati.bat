@@ -28,7 +28,7 @@ time /t
 FOR /r "%1" %%f IN (*) DO (
     set trovato=false
     FOR  /r "%dir2%" %%j IN (*) DO (
-       if "%%f" NEQ "%%j" (
+        if "%%f" NEQ "%%j" (
             if "%%~nf" == "%%~nj" (
                 set trovato=true
                 if "%corrispondenza%"=="true" (
@@ -38,7 +38,7 @@ FOR /r "%1" %%f IN (*) DO (
             ) else (
                 set trovato=true
             )
-       )
+        )
     )
 
     if "%trovato%"=="true" if "%corrispondenza%"=="false" (

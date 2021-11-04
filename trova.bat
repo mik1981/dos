@@ -7,8 +7,10 @@ set before=2
 set after=0
 set filter=true
 set str_in_file=false
+set rpl_str_in_file=false
 set feedback=false
 set strcmp=
+set strrpl=
 set wildcards=*.c *.h *.cpp *.hpp *.ld *.icf
 
 :loop
@@ -20,6 +22,15 @@ if "%~1" == "-s" (
     set strcmp="%~2"
     set str_in_file=true
     echo ricerca di %2 ...
+    shift
+    shift
+    goto loop
+)
+
+if "%~1" == "-r" (
+    set strrpl="%~2"
+    set rpl_str_in_file=true
+    echo sostituzione con %2 ...
     shift
     shift
     goto loop
@@ -81,8 +92,26 @@ if "%~1" NEQ "" ( goto help )
 echo tra i file/s %wildcards% ...
 echo ************************************************************************* %time% ***********
 
+if "%rpl_str_in_file%"=="true" (
+
+    set strcmp=%strcmp:"=%
+    set strrpl=%strrpl:"=%
+)
+
+
 if "%str_in_file%"=="false" (
     dir /s /b %wildcards%
+
+) else if "%rpl_str_in_file%"=="true" (
+
+    for /r %%i in (%wildcards%) do (
+REM         echo rename %%i %%~di%%~pitmp.bak
+        rename "%%i" tmp.bak
+        echo - "%%i"
+REM         echo opero con sed -e "s/%strcmp%/%strrpl%/g" ^> "%%i"
+        type "%%~di%%~pitmp.bak" | sed -e "s/%strcmp%/%strrpl%/g" > "%%i"
+        del "%%~di%%~pitmp.bak"
+    )
 
 ) else if "%subfolders%"=="true" (
 
@@ -144,6 +173,7 @@ echo   -c               cerca solo nella directory corrente
 echo   -a               mostra tutti i file ricercati
 echo   -i               ignora maiuscole-minuscole
 echo   -fb              informa con un popup della fine dell'operazione
+echo   -r str           abbinato a -s ricerca la stringa e la sostituisce con quella indicata (vietato "/")
 echo.
 echo   se non si specifica un ^<wildcards^> verra' applicato il default *.c *.h *.cpp *.hpp *.ld *.icf
 echo.

@@ -14,9 +14,9 @@ time /t
 
 
 if "%1"=="-f" (
-    forfiles /s /p "S:\Reparti\Progettazione\ProgettiAperti" /m *.zip /d -365 /c "cmd /c echo @path" | find "HW\History" > files_to_delete.txt
+    forfiles /s /p %perc% /m *.zip /d -365 /c "cmd /c echo @path" | find "HW\History" > files_to_delete.txt
     echo.
-    for /f "delims=" %%f in (files_to_delete.txt) do del "%%f"
+REM     for /f "delims=" %%f in (files_to_delete.txt) do del "%%f"
 
 ) else if "%1"=="-l" (
     if exist files_to_delete.txt ( for /f "delims=" %%f in (files_to_delete.txt) do del "%%f"
@@ -26,10 +26,12 @@ if "%1"=="-f" (
 
 
 ) else if "%1"=="-g" (
-    forfiles /s /p "S:\Reparti\Progettazione\ProgettiAperti" /m *.zip /d -365 /c "cmd /c echo @path" | find "HW\History" > files_to_delete.txt
+    forfiles /s /p %perc% /m *.zip /d -365 /c "cmd /c echo @path" | find "HW\History" > files_to_delete.txt
 
 ) else (
-    forfiles /s /p "S:\Reparti\Progettazione\ProgettiAperti" /m *.zip /d -365 /c "cmd /c echo @fdate @path" | find "HW\History"
+REM     forfiles /s /p %perc% /m *.zip /d -365 /c "cmd /c echo @fdate @path" | find "HW\History"
+    echo forfiles /s /p %perc% /m *~(*).SchDoc.zip /d -365 /c "cmd /c echo @fdate @path"...
+    forfiles /s /p %perc% /m *~(*).SchDoc.zip /d -365 /c "cmd /c echo @fdate @path"
 )
 
 echo fine...
