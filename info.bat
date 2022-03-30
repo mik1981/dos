@@ -11,6 +11,6 @@ if "%1"=="-h" (
 
 
 ) else (
-    if "%1"=="" ( msg /SERVER:192.168.67.87 Pasinelli "Scaduto messaggio generico"
-    ) else ( msg /SERVER:192.168.67.87 Pasinelli "%*" )
+    if "%1"=="" ( msg /SERVER:192.168.67.87 Michele "Scaduto messaggio generico"
+    ) else ( msg /SERVER:192.168.67.87 Michele "%*" )
 )

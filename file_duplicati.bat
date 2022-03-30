@@ -1,6 +1,7 @@
 @echo off
 set corrispondenza=true
 set filename=%0
+set dir2=%~1%
 
 :ricomincia
 
