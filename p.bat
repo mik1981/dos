@@ -1,5 +1,12 @@
 @echo off
 
+set pspadPgm="C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.5.1\PSPad.exe"
+
+if not exist %pspadPgm% (
+    echo il programma "%pspadFile%" non esiste
+    goto end
+)
+
 set /a argC=0
 for %%x in (%*) do Set /A argC+=1
 
@@ -26,7 +33,7 @@ if %argC%==0 (
 
         if exist %file% (
             echo lunch file da cb: PSPad.exe %file%
-            "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %file%
+            %pspadPgm% %file%
             goto end
         )
 
@@ -37,7 +44,7 @@ if %argC%==0 (
     if "%arg1:~0,1%"=="-" (
         if exist %file% (
             echo lunch file da cb alla riga %1: PSPad.exe %file% %1
-            "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %file% %1
+            %pspadPgm% %file% %1
             goto end
         )
 
@@ -46,7 +53,7 @@ if %argC%==0 (
         if "%arg1isNmb%"=="%arg1%" (
             if exist %file% (
                 echo lunch file da cb alla riga %1: PSPad.exe %file% -%1
-                "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %file% -%1
+                %pspadPgm% %file% -%1
                 goto end
             )
 
@@ -55,14 +62,14 @@ if %argC%==0 (
             if %argC%==2 (
                 if exist %file% (
                     echo lunch file da cb: PSPad.exe %file% %1
-                    "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %file% %1
+                    %pspadPgm% %file% %1
                     goto end
                 )
 
             ) else (
                 if exist %file% (
                     echo lunch file da cb: PSPad.exe %file%
-                    "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %file%
+                    %pspadPgm% %file%
                     goto end
                 )
 
@@ -79,16 +86,16 @@ if %argC%==1 (
         echo lunch: PSPad.exe %file% %1
 
 REM         if "%%1:~0,1%"=="-" (
-REM             "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %file% %1
+REM             %pspadPgm% %file% %1
 REM
 REM         ) else (
 REM             echo aggiunto "-" per salto a linea richiesta
-            "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %file% -%1
+            %pspadPgm% %file% -%1
 REM         )
 
     ) else if exist %1 (
         echo lunch: PSPad.exe %1
-        "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %1
+        %pspadPgm% %1
 
     ) else (
         echo *******  il file ... %file% ... o il file ...  %1 ... non esistono  *******
@@ -102,18 +109,18 @@ REM         )
 if %argC%==2 (
     echo avvio dei file %1 e %2...
     if "%%2:~0,1%"=="-" (
-        "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %*
+        %pspadPgm% %*
 
     ) else (
         rem echo aggiunto "-" per salto a linea richiesta
-        "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %1 -%2
+        %pspadPgm% %1 -%2
     )
 
 )
 
 if %argC%>2 (
     echo avvio dei %argC files...
-    "C:\Users\Pasinelli\Desktop\Archivio\proglink\_programmi\Varie\Editor\PSPad Editor5.0.7\PSPad.exe" %*
+    %pspadPgm% %*
 )
 
 goto end

@@ -1,0 +1,21 @@
+AZIONI ESEGUITE SU PC
+- Arresto di uvnc_service per l'accesso remoto tramite vnc
+
+Elencare i nomi di tutti i servizi di Windows presenti (installati) sul sistema:
+	sc queryex type=service state=all | grep -i "NOME_SERVIZIO:"
+
+Elencare i soli servizi attivi di Windows, con l'esclusione di quelli non attivi:
+	sc queryex type=service state=active
+
+Visualizzare lo status (attivo o inattivo) di un servizio specifico, individuato per nome:
+	sc query MyServiceName
+
+
+Nascondere contenuto facendolo sembrare una foto
+	copy /b Image001.jpg+coltri.zip fotosegreta.jpg
+
+Mostra anche la password per la rete wifi associata
+	netsh wlan show profile "xPico250_6EE649" key=clear
+
+Associa un percorso ad una lettera di unità.
+	subst

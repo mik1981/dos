@@ -8,7 +8,8 @@ setlocal EnableExtensions EnableDelayedExpansion
 
 pushd %perc%
 for /f "delims=£" %%i in ('where trova.bat') do set cmd_trova=%%i
-%cmd_trova% %*
+echo esecuzione di %cmd_trova% *%**.pdf
+%cmd_trova% *%**.pdf
 popd
 goto fine
 
